@@ -10,12 +10,23 @@ export interface Episode {
   created: string;
 }
 
-export const fetchEpisodes = async (): Promise<Episode[]> => {
-  try {
-    const response = await axios.get('https://rickandmortyapi.com/api/episode');
-    return response.data.results;
-  } catch (error) {
-    console.error('Error fetching episodes:', error);
-    throw error;
-  }
-};
+const url = 'https://rickandmortyapi.com/api/character'
+
+export async function loadCharacters(filters: object ) {
+  const params = filters
+  
+console.log(params)
+  // params._sort = sortProp;
+  // params._order = sortOrder;
+
+  // if (page && itemsPerPage) {
+  //   params._page = page;
+  //   params._limit = itemsPerPage;
+  // }
+
+  const response = await axios.get(url, { params });
+  const infos = response.data;
+  // const totalItems = response.headers['x-total-count'];
+  // return { totalItems, invoices };
+  return infos
+}

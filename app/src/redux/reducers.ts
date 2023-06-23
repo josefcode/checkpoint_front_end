@@ -1,37 +1,46 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { FETCH_EPISODES_FAILURE, FETCH_EPISODES_REQUEST, FETCH_EPISODES_SUCCESS } from './actions';
+import { createSlice, createAsyncThunk, PayloadAction  } from '@reduxjs/toolkit';
+import { loadCharacters } from '../api';
 
-interface EpisodeState {
-  episodes: any[];
+export interface EpisodeState {
+  episodes: string[];
   loading: boolean;
-  error: string | null;
 }
 
-const initialState: EpisodeState = {
+const initialState ={
   episodes: [],
   loading: false,
-  error: null,
 };
 
-const episodeSlice = createSlice({
-  name: 'episode',
+export const characterData = createAsyncThunk(
+  'character/characterData',
+  async (filters : object) => {
+    const result = await loadCharacters( filters);
+    return result;
+  }
+);
+
+
+const characters = createSlice({
+  name: 'character',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(FETCH_EPISODES_REQUEST, (state) => {
+      .addCase(characterData.pending, (state: EpisodeState ) => {
         state.loading = true;
-        state.error = null;
+        state.episodes = [];
       })
-      .addCase(FETCH_EPISODES_SUCCESS, (state, action) => {
+      .addCase(characterData.fulfilled, (state: EpisodeState, action : PayloadAction<string[]>) => {
         state.loading = false;
-        state.episodes = action.payload.results;
+        state.episodes = action.payload || [];
       })
-      .addCase(FETCH_EPISODES_FAILURE, (state, action) => {
+      .addCase(characterData.rejected, (state: EpisodeState) => {
         state.loading = false;
-        state.error = action.payload;
+        state.episodes = [];
       });
-  },
+  }
+  
 });
 
-export default episodeSlice.reducer;
+
+export default characters.reducer;

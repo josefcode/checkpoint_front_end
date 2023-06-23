@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import episodeReducer from './reducers';
-
+import characters from './reducers';
+import { useDispatch } from 'react-redux'
 const store = configureStore({
   reducer: {
-    episode: episodeReducer,
+    characters,
   },
 });
-
+export type AppDispatch = typeof store.dispatch
+export const useAppDispatch: () => AppDispatch = useDispatch
+export type RootState = ReturnType<typeof store.getState>
 export default store;
