@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useState } from 'react';
 
 export interface Episode {
   id: number;
@@ -12,8 +13,9 @@ export interface Episode {
 
 const url = 'https://rickandmortyapi.com/api/character'
 
-export async function loadCharacters(filters: object ) {
+export async function loadCharacters(page: number, filters: object ) {
   const params = filters
+  
   
 console.log(params)
   // params._sort = sortProp;
@@ -24,7 +26,7 @@ console.log(params)
   //   params._limit = itemsPerPage;
   // }
 
-  const response = await axios.get(url, { params });
+  const response = await axios.get(`${url}/?page=${page}`, { params });
   const infos = response.data;
   // const totalItems = response.headers['x-total-count'];
   // return { totalItems, invoices };

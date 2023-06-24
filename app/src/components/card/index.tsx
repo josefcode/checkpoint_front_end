@@ -17,8 +17,8 @@ export default function Card({ image, name, status, species, gender }:Cardprops)
       <div className="bg-slate-900 text-slate-200 shadow-md flex flex-col space-y-2 justify-around rounded-xl items-center gap-4 hover:scale-105 duration-200">
         <div className='flex items-baseline justify-between gap-4'>
         <h2 className="text-3xl text-center font-semibold pt-4">{name}</h2>
-        {/* <StarIcon className="h-8 text-slate-600" /> */}
-        <StarIcon className="h-8 text-yellow-400" />
+        <StarIcon className="h-8 text-slate-600" />
+        {/* <StarIcon className="h-8 text-yellow-400" /> */}
         </div>
         <img src={image} alt={name} />
         <div className='text-xl space-y-4 pb-4'>
