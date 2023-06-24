@@ -15,7 +15,7 @@ const url = 'https://rickandmortyapi.com/api/character'
 export async function loadCharacters(filters: object ) {
   const params = filters
   
-console.log(params)
+
   // params._sort = sortProp;
   // params._order = sortOrder;
 
@@ -26,7 +26,12 @@ console.log(params)
 
   const response = await axios.get(url, { params });
   const infos = response.data;
-  // const totalItems = response.headers['x-total-count'];
-  // return { totalItems, invoices };
+  return infos
+}
+
+
+export async function loadDetailCharacters(id: string) {
+  const response = await axios.get(`https://rickandmortyapi.com/api/character/${id}`);
+  const infos = response.data;
   return infos
 }
