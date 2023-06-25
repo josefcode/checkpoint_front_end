@@ -35,3 +35,9 @@ export async function loadDetailCharacters(id: string) {
   const infos = response.data;
   return infos
 }
+
+export async function loadPagination(num: number) {
+  const response = await axios.get(`https://rickandmortyapi.com/api/character?page=${num}`);
+  const infos = response.data;
+  return infos
+}

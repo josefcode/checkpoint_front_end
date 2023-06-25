@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Card from '../components/card';
-import {characterData } from '../redux/reducers'
+import {characterData, loadCharacterPagination } from '../redux/reducers'
 import '../App.css'
+import Pagination from '../components/pagination/Pagination';
+import Loading from '../components/loading-page/Loading';
+
 
 
 function Home() {
@@ -12,7 +15,10 @@ function Home() {
 
   const [inputValue, setInputValue] = useState('');
 
+const [currentPageUrl, setCurrentPageUrl] = useState(1)
+
   const handleFilterClick = () => {
+  
     setInputValue(inputValue);
     // Add your filtering logic here using the inputValue
   };
@@ -24,17 +30,30 @@ function Home() {
 
   useEffect(() => {
     dispatch(characterData({name: inputValue}));
+
   }, [dispatch, inputValue]);
 
-//   useEffect(() => {
-//     (async function () {
-//       let data = await fetch(api).then((res) => res.json());
-//       updateFetchedData(data);
-//     })();
-//   }, [api]);
+  useEffect(() => {
+    dispatch(loadCharacterPagination(currentPageUrl))
+  },[dispatch, currentPageUrl])
+
+  function nextPage() {
+    if(currentPageUrl < episodes.info?.pages){
+    setCurrentPageUrl((prev: number) => prev + 1)
+    }
+    }
+
+    function prevPage() {
+        setCurrentPageUrl((prev: number) => prev - 1)
+    
+    }
+
+    function goToPage(num: number) {
+      setCurrentPageUrl(num)
+    }
 
   return (
-
+  <div className='bg-gray-800'>
     <div className='w-screen bg-gray-800'>
      <div className='flex justify-center items-center'>
       <h1 className='text-gray-200 font-bold text-3xl py-8'>Rick and Morty Characters</h1>
@@ -66,7 +85,7 @@ function Home() {
     </div>
 
       {
-        loading && <div>Loading...</div>
+        loading && <Loading />
       }
       <div className='bg-gray-800 grid lg:grid-cols-5 lg:gap-3 md:grid-cols-3 md:gap-8 sm:grid-cols-1 sm:my-8'>      
         {episodes.results?.map((episode: any) => {
@@ -78,8 +97,15 @@ function Home() {
       })}
       
       </div>
-
     </div>
+     <Pagination 
+     nextPage={currentPageUrl < episodes.info?.pages ? nextPage : null}
+     prevPage={episodes.info?.prev ? prevPage : null }
+     goToPage={goToPage}
+     pages={episodes.info?.pages}
+     currentPage = {currentPageUrl}
+    />
+</div>
  
   );
 }

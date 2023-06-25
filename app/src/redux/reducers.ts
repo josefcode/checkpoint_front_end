@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction  } from '@reduxjs/toolkit';
-import { loadCharacters, loadDetailCharacters } from '../api';
+import { loadCharacters, loadDetailCharacters, loadPagination } from '../api';
 
 export interface EpisodeState {
   episodes: string[];
@@ -27,6 +27,13 @@ export const characterDataDetail = createAsyncThunk(
   }
 );
 
+export const loadCharacterPagination = createAsyncThunk(
+  'character/loadCharacterPagination',
+  async (num : number) => {
+    const result = await loadPagination(num);
+    return result;
+  }
+);
 
 const characters = createSlice({
   name: 'character',
@@ -57,7 +64,19 @@ const characters = createSlice({
       .addCase(characterDataDetail.rejected, (state: EpisodeState) => {
         state.loading = false;
         state.episodes = [];
-      });
+      })
+      .addCase(loadCharacterPagination.pending, (state: EpisodeState ) => {
+        state.loading = true;
+        state.episodes = [];
+      })
+      .addCase(loadCharacterPagination.fulfilled, (state: EpisodeState, action : PayloadAction<string[]>) => {
+        state.loading = false;
+        state.episodes = action.payload || [];
+      })
+      .addCase(loadCharacterPagination.rejected, (state: EpisodeState) => {
+        state.loading = false;
+        state.episodes = [];
+      })
   }
   
 });

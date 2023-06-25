@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { characterDataDetail } from "../../../redux/reducers";
+import CircularProgress from '@mui/material/CircularProgress';
 import '../../../App.css'
+import Loading from "../../loading-page/Loading";
 
 
 const CardDetails = () => {
@@ -16,7 +18,9 @@ const CardDetails = () => {
   }, [dispatch]);
 
   if(loading){
-    return <div>loading ....</div>
+    return (
+      <Loading />
+    )
   }
 
   return (
