@@ -22,3 +22,5 @@ const FavoritesPage: React.FC<FavoritesPageProps> = ({ favoriteNames }) => {
 };
 
 export default FavoritesPage;
+
+

@@ -21,8 +21,8 @@ export const characterData = createAsyncThunk(
 
 export const characterDataDetail = createAsyncThunk(
   'character/characterDataDetail',
-  async (id : string) => {
-    const result = await loadDetailCharacters( id);
+  async (id : any) => {
+    const result = await loadDetailCharacters(id);
     return result;
   }
 );

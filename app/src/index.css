@@ -3,3 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    font-family: 'Bangers', cursive;
+    letter-spacing: 2px;
+}

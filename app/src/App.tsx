@@ -14,13 +14,20 @@ function App() {
 
     <Router>
     <nav className="p-4 bg-gray-200">
-      <ul className="flex">
+      <ul className="flex justify-center items-center">
         <li>
-          <Link to="/">Home</Link>
+          <Link to ="/" className=''>
+            <img className = "w-20 h-20" src ="https://morty-smith.netlify.app/static/media/Logo.f5e1157c.png" alt="logo" />
+          </Link>
+        </li>
+        <div className='ml-auto flex'>
+        <li>
+          <Link to="/" className='text-xl'>Home</Link>
         </li>
         <li className="ml-4">
-          <Link to="/favorites">Favorites</Link>
+          <Link to="/favorites" className='text-xl'>Favorites</Link>
         </li>
+        </div>
       </ul>
     </nav>
 
