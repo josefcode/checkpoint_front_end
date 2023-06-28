@@ -6,9 +6,9 @@ const Pagination = ({ nextPage, prevPage, goToPage, pages, currentPage }:any) =>
   const  pageButtons = []
   function styleButtons(index: number){
      if(currentPage === index){
-       return  <button className="h-7 w-7 mx-1 rounded-lg border text-center bg-blue-500 text-white font-bold" key={index} onClick={() => goToPage(index)}>{index}</button>
+       return  <button className="h-6 w-6 mx-1 rounded-lg border text-center bg-blue-500 text-white font-bold" key={index} onClick={() => goToPage(index)}>{index}</button>
      }
-     return <button className="h-7 w-7 mx-1 rounded-lg border text-center bg-white font-bold" key={index} onClick={() => goToPage(index)}>{index}</button>
+     return <button className="h-6 w-6 mx-1 rounded-lg border text-center bg-white font-bold" key={index} onClick={() => goToPage(index)}>{index}</button>
   }
   for (let i = 1; i <= pages; i++) {
             pageButtons.push(styleButtons(i))

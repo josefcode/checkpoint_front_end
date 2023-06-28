@@ -15,15 +15,6 @@ const url = 'https://rickandmortyapi.com/api/character'
 export async function loadCharacters(filters: object ) {
   const params = filters
   
-
-  // params._sort = sortProp;
-  // params._order = sortOrder;
-
-  // if (page && itemsPerPage) {
-  //   params._page = page;
-  //   params._limit = itemsPerPage;
-  // }
-
   const response = await axios.get(url, { params });
   const infos = response.data;
   return infos
@@ -41,3 +32,10 @@ export async function loadPagination(num: number) {
   const infos = response.data;
   return infos
 }
+
+export async function loadFavorite(num: number[]) {
+  const response = await axios.get(`https://rickandmortyapi.com/api/character?id=${num}`);
+  const infos = response.data;
+  return infos
+}
+

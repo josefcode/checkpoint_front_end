@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from 'react';
-// import { useDispatch, useSelector,  TypedUseSelectorHook } from 'react-redux';
 import {
   useAppDispatch,
   useAppSelector,
 } from '../redux/hooks';
 import Card from '../components/card';
-import {characterData, loadCharacterPagination } from '../redux/reducers'
+import {characterData, loadCharacterPagination,   addToFavorites,
+  removeFromFavorites, } from '../redux/reducers'
 import '../App.css'
 import Pagination from '../components/pagination/Pagination';
 import Loading from '../components/loading-page/Loading';
 import type {
-  AppDispatch,
   RootState,
 } from '../redux/store';
-
 
 
 function Home() {
   const dispatch = useAppDispatch();
 
-  const {episodes, loading} : {episodes: any, loading: boolean} = useAppSelector((state: RootState) => state.characters);
+  const {episodes, loading, favorites} : {episodes: any, loading: boolean, favorites: any} = useAppSelector((state: RootState) => state.characters);
 
   const [inputValue, setInputValue] = useState('');
 
@@ -54,6 +52,14 @@ const [currentPageUrl, setCurrentPageUrl] = useState(1)
       setCurrentPageUrl(num)
     }
 
+    const handleAddToFavorites = (episodeId: string) => {
+      dispatch(addToFavorites(episodeId));
+    };
+  
+    const handleRemoveFromFavorites = (episodeId: string) => {
+      dispatch(removeFromFavorites(episodeId));
+    };
+
   return (
   <div className='bg-gray-800'>
     <div className='w-screen bg-gray-800'>
@@ -77,22 +83,31 @@ const [currentPageUrl, setCurrentPageUrl] = useState(1)
         Cancel
       </button>
     </div>
-
+    <Pagination 
+     nextPage={currentPageUrl < episodes.info?.pages ? nextPage : null}
+     prevPage={episodes.info?.prev ? prevPage : null }
+     goToPage={goToPage}
+     pages={episodes.info?.pages}
+     currentPage = {currentPageUrl}
+    />
       {
         loading && <Loading />
       }
-      <div className='bg-gray-800 grid lg:grid-cols-5 lg:gap-3 md:grid-cols-3 md:gap-8 sm:grid-cols-1 sm:my-8'>      
+      <div className='bg-gray-800 grid lg:grid-cols-5 lg:gap-2 md:grid-cols-2 md:gap-7 sm:grid-cols-1 sm:my-7'>      
         {episodes.results?.map((episode: any) => {
           const{id, image, name } = episode
-      
+          const isFavorite = favorites.includes(id);
           return (
-            <Card id = {id} image={image} name={name}/>
+            <Card key = {id} id = {id} image={image} name={name} noLink = {false}   
+            favorite={isFavorite}
+            addToFavorites={handleAddToFavorites}
+            removeFromFavorites={handleRemoveFromFavorites}/>
           )
       })}
       
       </div>
     </div>
-     <Pagination 
+    <Pagination 
      nextPage={currentPageUrl < episodes.info?.pages ? nextPage : null}
      prevPage={episodes.info?.prev ? prevPage : null }
      goToPage={goToPage}

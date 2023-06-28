@@ -7,8 +7,7 @@ import CardDetails from './components/card/card-details/cardDetail';
 
 
 function App() {
- 
-  const [favoriteNames, setFavoriteNames] = useState<string[]>([]);
+
   return (
 
 
@@ -33,7 +32,7 @@ function App() {
 
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/favorites" element={<FavoritesPage favoriteNames={favoriteNames} />} />
+      <Route path="/favorites" element={<FavoritesPage />} />
       <Route path="/detail/:id" element={<CardDetails />} />
     </Routes>
   </Router>

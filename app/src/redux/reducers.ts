@@ -1,14 +1,16 @@
 import { createSlice, createAsyncThunk, PayloadAction  } from '@reduxjs/toolkit';
-import { loadCharacters, loadDetailCharacters, loadPagination } from '../api';
+import { loadCharacters, loadDetailCharacters, loadFavorite, loadPagination } from '../api';
 
 export interface EpisodeState {
   episodes: string[];
   loading: boolean;
+  favorites: string[]
 }
 
 const initialState ={
   episodes: [],
   loading: false,
+  favorites: []
 };
 
 export const characterData = createAsyncThunk(
@@ -35,10 +37,34 @@ export const loadCharacterPagination = createAsyncThunk(
   }
 );
 
+
+export const loadCharacterFavorite = createAsyncThunk(
+  'character/loadCharacterFavorite',
+  async (num : number[]) => {
+    const result = await loadFavorite(num);
+    return result;
+  }
+);
+
 const characters = createSlice({
   name: 'character',
   initialState,
-  reducers: {},
+  reducers: {
+
+      addToFavorites: (state: EpisodeState, action: PayloadAction<any>) => {
+        const episodeId = action.payload;
+        console.log(episodeId)
+        if (!state.favorites.includes(episodeId)) {
+          state.favorites.push(episodeId);
+        }
+      },
+      removeFromFavorites: (state: EpisodeState, action: PayloadAction<any>) => {
+        const episodeId = action.payload;
+        console.log(episodeId)
+        state.favorites = state.favorites.filter((id) => id !== episodeId);
+      },
+    
+  },
   extraReducers: (builder) => {
     builder
       .addCase(characterData.pending, (state: EpisodeState ) => {
@@ -77,9 +103,22 @@ const characters = createSlice({
         state.loading = false;
         state.episodes = [];
       })
+      .addCase(loadCharacterFavorite.pending, (state: EpisodeState ) => {
+        state.loading = true;
+        state.episodes = [];
+      })
+      .addCase(loadCharacterFavorite.fulfilled, (state: EpisodeState, action : PayloadAction<string[]>) => {
+        state.loading = false;
+        state.episodes = action.payload || [];
+      })
+      .addCase(loadCharacterFavorite.rejected, (state: EpisodeState) => {
+        state.loading = false;
+        state.episodes = [];
+      })
   }
   
 });
 
+export const { addToFavorites, removeFromFavorites } = characters.actions;
 
 export default characters.reducer;

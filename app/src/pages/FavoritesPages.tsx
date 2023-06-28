@@ -1,20 +1,63 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import {
+  useAppDispatch,
+  useAppSelector,
+} from '../redux/hooks';
+import { loadCharacterFavorite } from '../redux/reducers';
+import Card from '../components/card';
+import Loading from '../components/loading-page/Loading';
+import { useNavigate } from 'react-router-dom';
+import { RootState } from '../redux/store';
 
-interface FavoritesPageProps {
-  favoriteNames: string[];
-}
+const FavoritesPage = () => {
 
-const FavoritesPage: React.FC<FavoritesPageProps> = ({ favoriteNames }) => {
+  const navigate = useNavigate();
+
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  const dispatch = useAppDispatch()
+
+  const {episodes, loading, favorites} : {episodes: any, loading: boolean, favorites: number[]} = useAppSelector((state: RootState) => state.characters);
+ 
+ 
+  useEffect(() => {
+    dispatch(loadCharacterFavorite(favorites))
+  },[useAppDispatch, loadCharacterFavorite])
+ 
+ 
   return (
-    <div>
+    <div className= "p-12 bg-pink-100 h-screen">
+       <button className='w-12 h-8 rounded-sm mb-5 text-center bg-black text-pink-200 font-bold tracking-wide' onClick = {goBack}> back</button>
+
       <h2 className="text-lg font-bold mb-4">Favorite Names</h2>
-      {favoriteNames.length === 0 ? (
+
+     
+      {
+        loading && <Loading />
+      }
+      {favorites.length === 0 ? (
         <p>No favorite names yet.</p>
       ) : (
         <ul>
-          {favoriteNames.map((name, index) => (
-            <li key={index}>{name}</li>
-          ))}
+      {episodes.results?.map((episode: any) => {
+          const{id, image, name } = episode
+          const isFavorite = favorites.includes(id);
+       
+      
+
+          if(isFavorite){
+            return <Card key = {id} id = {id} image={image} name={name}  
+            favorite={isFavorite} noLink
+
+            />
+          } else {
+            return null
+          }
+
+      })}
         </ul>
       )}
     </div>

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+import {  useAppDispatch, useAppSelector, } from "../../../redux/hooks";
 import { characterDataDetail } from "../../../redux/reducers";
 import Loading from "../../loading-page/Loading";
 
 
 const CardDetails = () => {
   const { id } : any = useParams();
-  const dispatch = useDispatch();
-  const {episodes, loading} = useSelector((state: any) => state.characters);
+
+  console.log(typeof id)
+  const dispatch = useAppDispatch();
+  const {episodes, loading} = useAppSelector((state: any) => state.characters);
   const { name, location, origin, gender, image, status, species } = episodes;
 
   useEffect(() => {
