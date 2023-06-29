@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { addToFavorites, removeFromFavorites } from '../../redux/reducers';
 import './index.css'
 
 

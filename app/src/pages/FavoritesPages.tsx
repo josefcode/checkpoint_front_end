@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   useAppDispatch,
   useAppSelector,
@@ -29,10 +29,10 @@ const FavoritesPage = () => {
  
  
   return (
-    <div className= "p-12 bg-pink-100 h-screen">
-       <button className='w-12 h-8 rounded-sm mb-5 text-center bg-black text-pink-200 font-bold tracking-wide' onClick = {goBack}> back</button>
+    <div className= "p-8 bg-pink-200 h-screen">
+       <button className='w-16 h-8 rounded-md mb-5 bg-black text-pink-200 tracking-widest' onClick = {goBack}> back</button>
 
-      <h2 className="text-lg font-bold mb-4">Favorite Names</h2>
+      <h2 className="text-2xl mb-4">Favorite Names</h2>
 
      
       {
