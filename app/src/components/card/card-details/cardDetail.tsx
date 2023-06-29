@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { characterDataDetail } from "../../../redux/reducers";
 import Loading from "../../loading-page/Loading";
@@ -7,7 +7,11 @@ import Loading from "../../loading-page/Loading";
 
 const CardDetails = () => {
   const { id } : any = useParams();
+  const navigate = useNavigate();
 
+  const goBack = () => {
+    navigate(-1);
+  };
   console.log(typeof id)
   const dispatch = useAppDispatch();
   const {episodes, loading} = useAppSelector((state: any) => state.characters);
@@ -34,15 +38,20 @@ const CardDetails = () => {
     </div>
 
 <div className="w-full p-8 border-solid border-4 border-teal-900">
+<div className="flex justify-center"> 
+    <button className='w-24 h-8 rounded-md mb-5 bg-black text-white tracking-widest' onClick={goBack}> back</button>
+  </div>
+  <div className="flex justify-center"> 
     {(() => {
       if (status === "Dead") {
-        return <div className="badge bg-red-500 rounded-md text-white text-xl text-center py-1">{status}</div>;
+        return <div className="badge w-32 h-8 bg-red-500 rounded-md text-white text-xl text-center py-1">{status}</div>;
       } else if (status === "Alive") {
-        return <div className="badge bg-green-500 rounded-md text-white text-xl text-center py-1">{status}</div>;
+        return <div className="badge w-32 h-8 bg-green-500 rounded-md text-white text-xl text-center py-1">{status}</div>;
       } else {
-        return <div className="badge bg-gray-500 rounded-md text-white text-xl text-center py-1">{status}</div>;
+        return <div className="badge w-32 h-8 bg-gray-500 rounded-md text-white text-xl text-center py-1">{status}</div>;
       }
     })()}
+    </div>
     <div className="flex flex-col text-center">
 
         <span className="text-2xl">Gender : {gender} </span>
