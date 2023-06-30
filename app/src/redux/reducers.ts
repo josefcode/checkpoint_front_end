@@ -12,7 +12,9 @@ const initialState ={
   loading: false,
   favorites: []
 };
-
+/**
+ * Carregar os personagens
+ */
 export const characterData = createAsyncThunk(
   'character/characterData',
   async (filters : object) => {
@@ -20,7 +22,9 @@ export const characterData = createAsyncThunk(
     return result;
   }
 );
-
+/**
+ * Carregar os detalhes do personagem (card)
+ */
 export const characterDataDetail = createAsyncThunk(
   'character/characterDataDetail',
   async (id : any) => {
@@ -28,7 +32,9 @@ export const characterDataDetail = createAsyncThunk(
     return result;
   }
 );
-
+/**
+ * Carregar a paginação
+ */
 export const loadCharacterPagination = createAsyncThunk(
   'character/loadCharacterPagination',
   async (num : number) => {
@@ -37,7 +43,9 @@ export const loadCharacterPagination = createAsyncThunk(
   }
 );
 
-
+/**
+ * Carregar os favoritos
+ */
 export const loadCharacterFavorite = createAsyncThunk(
   'character/loadCharacterFavorite',
   async (num : number[]) => {
@@ -45,7 +53,9 @@ export const loadCharacterFavorite = createAsyncThunk(
     return result;
   }
 );
-
+/**
+ * Filtrar os favoritos
+ */
 const characters = createSlice({
   name: 'character',
   initialState,
