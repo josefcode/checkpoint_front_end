@@ -1,6 +1,9 @@
-
 import CircularProgress from '@mui/material/CircularProgress';
 
+/**
+ * Função para esperar o carregamento da API
+ * @returns {string}
+ */
 
 const Loading = () => {
    return (
