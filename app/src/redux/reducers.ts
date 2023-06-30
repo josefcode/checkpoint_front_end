@@ -23,7 +23,7 @@ export const characterData = createAsyncThunk(
 
 export const characterDataDetail = createAsyncThunk(
   'character/characterDataDetail',
-  async (id : any) => {
+  async (id : string ) => {
     const result = await loadDetailCharacters(id);
     return result;
   }
@@ -51,16 +51,16 @@ const characters = createSlice({
   initialState,
   reducers: {
 
-      addToFavorites: (state: EpisodeState, action: PayloadAction<any>) => {
+      addToFavorites: (state: EpisodeState, action: PayloadAction<string>) => {
         const episodeId = action.payload;
-        console.log(episodeId)
+      
         if (!state.favorites.includes(episodeId)) {
           state.favorites.push(episodeId);
         }
       },
-      removeFromFavorites: (state: EpisodeState, action: PayloadAction<any>) => {
+      removeFromFavorites: (state: EpisodeState, action: PayloadAction<string>) => {
         const episodeId = action.payload;
-        console.log(episodeId)
+
         state.favorites = state.favorites.filter((id) => id !== episodeId);
       },
     

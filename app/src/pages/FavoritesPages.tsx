@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import {
   useAppDispatch,
   useAppSelector,
@@ -25,7 +25,7 @@ const FavoritesPage = () => {
  
   useEffect(() => {
     dispatch(loadCharacterFavorite(favorites))
-  },[useAppDispatch, loadCharacterFavorite])
+  },[useAppDispatch, favorites])
  
  
   return (
