@@ -18,11 +18,11 @@ A small project using Redux toolkit and typescript with react.
 
 ## What is included in:
 
-Show all the characters
-Show the details of every character when clicking on the info button on a separate page
-The favorite page shows all favorite characters
-Filter characters based on the name
-Pagination bar to navigate through all the characters based on each page.
+1. Show all the characters
+2. Show the details of every character when clicking on the info button on a separate page
+3. The favorite page shows all favorite characters
+4. Filter characters based on the name
+5. Pagination bar to navigate through all the characters based on each page.
 
 ## Contributors ✨
 
